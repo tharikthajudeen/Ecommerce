@@ -25,6 +25,19 @@ export default function ProductDetail ({cartItems, setCartItems}) {
         }
     }
 
+    function increaseQty (){
+        if (product.stock == qty) {
+            return;
+        }
+        setQty((state) => state + 1)
+    }
+
+    function decreaseQty (){
+        if (qty > 1) {
+            return setQty((state) => state -1);
+        }  
+    }
+
     return product && <div className="container container-fluid">
                 <div classNameName="row f-flex justify-content-around">
                     <div className="col-12 col-lg-5 img-fluid" id="product_image">
@@ -46,13 +59,13 @@ export default function ProductDetail ({cartItems, setCartItems}) {
 
                         <p id="product_price">${product.price}</p>
                         <div className="stockCounter d-inline">
-                            <span className="btn btn-danger minus">-</span>
+                            <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
 
                             <input type="number" className="form-control count d-inline" value={qty} readOnly />
 
-                            <span className="btn btn-primary plus">+</span>
+                            <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
                         </div>
-                        <button type="button" onClick={addToCart} id="cart_btn" className="btn btn-primary d-inline ml-4">Add to Cart</button>
+                        <button type="button" onClick={addToCart} disabled={product.stock == 0} id="cart_btn" className="btn btn-primary d-inline ml-4">Add to Cart</button>
 
                         <hr/>
 
